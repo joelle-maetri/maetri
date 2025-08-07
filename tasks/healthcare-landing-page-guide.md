@@ -128,7 +128,7 @@ npm install -D gh-pages
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareConnect - Healthcare for Seniors</title>
+    <title>Maetri - Evidence-Based Outcomes When Care Is the Real Work</title>
     <meta name="description" content="Compassionate healthcare solutions for seniors and their families">
     <link href="./dist/output.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -166,7 +166,7 @@ npm install -D gh-pages
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
-                    <p class="text-xl text-blue-100">Contact us today to learn how CareConnect can help your family</p>
+                    <p class="text-xl text-blue-100">Contact us today to learn how Maetri can transform your healthcare outcomes</p>
                 </div>
                 
                 <div class="bg-white rounded-xl shadow-xl p-8">

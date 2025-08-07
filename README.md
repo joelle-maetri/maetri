@@ -71,7 +71,7 @@ website/
 
 ## 🎨 Design Features
 
-- **Color Scheme**: Professional blue (#2563eb) with healthcare-appropriate palette
+- **Color Scheme**: Maetri brand colors - Primary (#5090DA), Secondary (#E4B23C)
 - **Typography**: Inter font family for readability
 - **Icons**: Font Awesome icons throughout
 - **Images**: High-quality Unsplash stock photos
@@ -128,7 +128,7 @@ Visit the deployed site at: `https://joelle-maetri.github.io/maetri`
 
 ## 📞 Contact Information
 
-- **Phone**: (555) 123-CARE
+- **Phone**: (555) 123-4567
 - **Availability**: 24/7 for emergencies
 - **Email**: Contact form on website
 
