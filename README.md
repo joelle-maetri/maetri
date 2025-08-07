@@ -1,6 +1,6 @@
-# CareConnect - Healthcare Landing Page
+# Maetri - Evidence-Based Outcomes When Care Is the Real Work
 
-A professional single-page website for a healthcare application focused on elderly care. Built with HTML, JavaScript, and Tailwind CSS.
+Built with HTML, JavaScript, and Tailwind CSS.
 
 ## 🚀 Features
 
@@ -33,19 +33,23 @@ website/
 ## 🛠️ Installation & Setup
 
 1. **Clone or navigate to the project directory**
+
    ```bash
    cd website
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run serve
    ```
+
    The site will be available at `http://localhost:3000`
 
 ## 🎯 Available Scripts
@@ -82,6 +86,7 @@ website/
 ## 🔧 Form Integration
 
 The contact form includes:
+
 - Client-side validation
 - Email format validation
 - Required field checking
@@ -119,7 +124,7 @@ To integrate with a backend service:
 
 ## 🔗 Live Demo
 
-Visit the deployed site at: `https://yourusername.github.io/website`
+Visit the deployed site at: `https://joelle-maetri.github.io/maetri`
 
 ## 📞 Contact Information
 
@@ -151,4 +156,4 @@ Visit the deployed site at: `https://yourusername.github.io/website`
 
 ---
 
-**Built with ❤️ for better healthcare accessibility**
+## Built with ❤️ for better healthcare accessibility
