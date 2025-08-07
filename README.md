@@ -128,8 +128,6 @@ Visit the deployed site at: `https://joelle-maetri.github.io/maetri`
 
 ## 📞 Contact Information
 
-- **Phone**: (555) 123-4567
-- **Availability**: 24/7 for emergencies
 - **Email**: Contact form on website
 
 ## 🛡️ Security & Compliance
