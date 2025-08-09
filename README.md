@@ -16,7 +16,8 @@ Built with HTML, JavaScript, and Tailwind CSS.
 website/
 ├── index.html              # Main HTML file
 ├── src/
-│   ├── input.css          # Tailwind CSS source
+│   ├── input.css          # Tailwind CSS source with custom styles
+│   ├── custom.css         # Additional custom CSS (legacy)
 │   └── main.js            # JavaScript functionality
 ├── dist/
 │   └── output.css         # Generated CSS
@@ -55,9 +56,19 @@ website/
 ## 🎯 Available Scripts
 
 - `npm run serve` - Start local development server
-- `npm run build-prod` - Build minified CSS for production
-- `npm run deploy` - Deploy to GitHub Pages
-- `npm run dev` - Start development with watch mode
+- `npm run build` - Build CSS with watch mode for development
+- `npm run build-prod` - Build minified CSS for production using Tailwind CSS v4
+- `npm run deploy` - Build production CSS and deploy to GitHub Pages
+- `npm run dev` - Start development with both build watch and server
+
+## 🔧 Build System
+
+The project uses **Tailwind CSS v4** with a custom configuration:
+
+- **Source CSS**: `src/input.css` - Contains Tailwind directives and custom styles
+- **Output CSS**: `dist/output.css` - Generated CSS file
+- **Custom Styles**: All custom colors, components, and utilities are defined in `src/input.css`
+- **Production Build**: Uses `--minify` flag for optimized output
 
 ## 📝 Page Sections
 
@@ -101,10 +112,12 @@ To integrate with a backend service:
 
 ## 🚀 Deployment Options
 
-### GitHub Pages
+### GitHub Pages (Automated)
 
 1. Push code to GitHub repository
-2. Run `npm run deploy` to deploy via gh-pages
+2. Run `npm run deploy` to build and deploy via gh-pages
+   - This automatically runs `npm run build-prod` to generate minified CSS
+   - Deploys the entire directory to gh-pages branch
 3. Enable GitHub Pages in repository settings
 
 ### Manual Deployment
@@ -112,6 +125,14 @@ To integrate with a backend service:
 1. Run `npm run build-prod` to generate production CSS
 2. Upload all files to your web server
 3. Ensure `index.html` is in the root directory
+
+### Troubleshooting Deployment
+
+If CSS styles don't appear on the deployed site:
+- Ensure `src/input.css` contains all custom styles
+- Verify the build process completes without errors
+- Check that `dist/output.css` includes all necessary styles
+- The deploy script uses `npx tailwindcss` with the `@tailwindcss/cli` package
 
 ## 🧪 Testing Checklist
 
