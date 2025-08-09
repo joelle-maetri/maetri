@@ -1,0 +1,86 @@
+/* Custom CSS Classes for Developer Additions */
+
+/* Custom background gradients */
+.special-linear-bg-transparent-to-white {
+    background: linear-gradient(to bottom, #e0e7ff 0%, #e0e7ff 10%, #fff 10%, #fff 100%);
+}
+
+/* Custom button styles */
+.btn-primary {
+    background-color: #5090DA;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(80, 144, 218, 0.2);
+}
+
+.btn-secondary {
+    border: 2px solid #5090DA;
+    color: #5090DA;
+    background-color: transparent;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5090DA;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Custom font utilities */
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Custom spacing and layout */
+.section-padding {
+    padding: 4rem 0;
+}
+
+/* Custom card styles */
+.custom-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.custom-card:hover {
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Custom text styles */
+.text-gradient {
+    background: linear-gradient(135deg, #5090DA, #D8A5A3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    .special-linear-bg {
+        padding: 2rem 0;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
