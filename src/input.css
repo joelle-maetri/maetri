@@ -87,10 +87,79 @@
 }
 
 @layer utilities {
+  /* Spacing utilities */
+  .p-4 { padding: 1rem; }
+  .p-8 { padding: 2rem; }
+  .px-4 { padding-left: 1rem; padding-right: 1rem; }
+  .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+  .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+  .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+  .pt-16 { padding-top: 4rem; }
+  .pt-24 { padding-top: 6rem; }
+  .pb-16 { padding-bottom: 4rem; }
+  
+  .m-0 { margin: 0; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-4 { margin-bottom: 1rem; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mb-8 { margin-bottom: 2rem; }
+  .mb-12 { margin-bottom: 3rem; }
+  .mb-16 { margin-bottom: 4rem; }
+  .mr-2 { margin-right: 0.5rem; }
+  .mr-3 { margin-right: 0.75rem; }
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-4 { margin-top: 1rem; }
+  .mt-8 { margin-top: 2rem; }
+  .ml-8 { margin-left: 2rem; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+  .mx-16 { margin-left: 4rem; margin-right: 4rem; }
+
+  /* Text sizes */
+  .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+  .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+  .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+  .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+  .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  
+  /* Flexbox and grid */
+  .gap-2 { gap: 0.5rem; }
+  .gap-4 { gap: 1rem; }
+  .gap-6 { gap: 1.5rem; }
+  .gap-8 { gap: 2rem; }
+  .gap-12 { gap: 3rem; }
+  .space-x-4 > * + * { margin-left: 1rem; }
+  .space-x-8 > * + * { margin-left: 2rem; }
+  .space-y-2 > * + * { margin-top: 0.5rem; }
+  .space-y-4 > * + * { margin-top: 1rem; }
+  
+  .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .md\:col-span-2 { grid-column: span 2 / span 2; }
+
   /* Custom spacing */
   .w-43 { width: 172px; }
+  .w-20 { width: 5rem; }
+  .h-20 { height: 5rem; }
   .max-w-3xl { max-width: 48rem; }
   .max-w-4xl { max-width: 56rem; }
+  
+  /* Borders and shadows */
+  .rounded { border-radius: 0.25rem; }
+  .rounded-lg { border-radius: 0.5rem; }
+  .rounded-xl { border-radius: 0.75rem; }
+  .shadow-md { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+  .shadow-lg { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+  .shadow-xl { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+  
+  /* Responsive utilities */
+  .md\:flex { display: flex; }
+  .md\:hidden { display: none; }
+  .sm\:flex-row { flex-direction: row; }
   
   /* Custom background gradients */
   .special-linear-bg-transparent-to-white {
@@ -103,4 +172,5 @@
   .hover\:bg-blue-600:hover { background-color: #2563eb; }
   .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
   .hover\:bg-primary:hover { background-color: #5090DA; }
+  .hover\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
 }
