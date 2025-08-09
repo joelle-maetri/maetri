@@ -5,11 +5,12 @@ module.exports = {
     extend: {
       colors: {
         primary: '#5090DA',
-        secondary: '#E4B23C',
+        secondary: '#D8A5A3',
         accent: '#9333ea'
       },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif']
+        'sans': ['Inter', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif']
       }
     },
   },

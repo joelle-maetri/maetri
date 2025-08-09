@@ -71,8 +71,8 @@ website/
 
 ## 🎨 Design Features
 
-- **Color Scheme**: Maetri brand colors - Primary (#5090DA), Secondary (#E4B23C)
-- **Typography**: Inter font family for readability
+- **Color Scheme**: Maetri brand colors - Primary (#5090DA), Secondary (#D8A5A3)
+- **Typography**: Inter for body text, Playfair Display for headers
 - **Icons**: Font Awesome icons throughout
 - **Images**: High-quality Unsplash stock photos
 - **Animations**: Fade-in on scroll and hover effects
