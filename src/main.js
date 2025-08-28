@@ -12,10 +12,27 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// EmailJS configuration
+class EmailService {
+    constructor() {
+        // Initialize EmailJS with your public key
+        // To get these values:
+        // 1. Go to https://www.emailjs.com/
+        // 2. Create an account and add an email service (Gmail, Outlook, etc.)
+        // 3. Create an email template with variables: {{from_name}}, {{from_email}}, {{message}}, {{to_email}}
+        // 4. Get your public key, service ID, and template ID from EmailJS dashboard
+        emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your EmailJS public key
+    }
+    
+    static SERVICE_ID = "service_xxxxxxx"; // Replace with your EmailJS service ID
+    static TEMPLATE_ID = "template_xxxxxxx"; // Replace with your EmailJS template ID
+}
+
 // Contact form handling
 class ContactForm {
     constructor() {
         this.form = document.getElementById('contactForm');
+        this.emailService = new EmailService();
         this.init();
     }
 
@@ -36,8 +53,8 @@ class ContactForm {
         const formData = new FormData(this.form);
         const data = Object.fromEntries(formData);
         
-        // Validation
-        if (!data.firstName || !data.lastName || !data.email) {
+        // Validation - updated to match current form fields
+        if (!data.fullName || !data.email) {
             this.showMessage('Please fill in all required fields.', 'error');
             return;
         }
@@ -73,12 +90,33 @@ class ContactForm {
     }
 
     sendEmail(data) {
-        // Example EmailJS integration
-        // return emailjs.send('service_id', 'template_id', data);
+        // Check if EmailJS is available
+        if (typeof emailjs === 'undefined') {
+            console.error('EmailJS not loaded');
+            return Promise.reject(new Error('EmailJS service not available'));
+        }
         
-        // For demo purposes, simulate API call
-        return new Promise((resolve) => {
-            setTimeout(resolve, 2000);
+        // Prepare template parameters for EmailJS
+        const templateParams = {
+            to_email: 'brock@maetri.com',
+            from_name: data.fullName,
+            from_email: data.email,
+            message: data.message || 'No message provided',
+            reply_to: data.email,
+            subject: `New Contact Form Submission from ${data.fullName}`
+        };
+        
+        // Send email via EmailJS
+        return emailjs.send(
+            EmailService.SERVICE_ID,
+            EmailService.TEMPLATE_ID,
+            templateParams
+        ).then((response) => {
+            console.log('Email sent successfully:', response.status, response.text);
+            return response;
+        }).catch((error) => {
+            console.error('EmailJS error:', error);
+            throw error;
         });
     }
 
