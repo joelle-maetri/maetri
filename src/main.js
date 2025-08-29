@@ -12,10 +12,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+import { GOOGLE_FORM_CONFIG } from './config.js';
+
+// Google Forms integration
+class GoogleFormService {
+    constructor() {
+        // Load configuration from separate file
+        this.FORM_URL = GOOGLE_FORM_CONFIG.FORM_URL;
+        this.FIELD_IDS = GOOGLE_FORM_CONFIG.FIELD_IDS;
+    }
+
+    submitForm(data) {
+        const formData = new FormData();
+        formData.append(this.FIELD_IDS.fullName, data.fullName);
+        formData.append(this.FIELD_IDS.email, data.email);
+        formData.append(this.FIELD_IDS.message, data.message || '');
+
+        // Submit to Google Forms
+        return fetch(this.FORM_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Required for Google Forms
+            body: formData
+        });
+    }
+}
+
 // Contact form handling
 class ContactForm {
     constructor() {
         this.form = document.getElementById('contactForm');
+        this.googleFormService = new GoogleFormService();
         this.init();
     }
 
@@ -36,8 +62,8 @@ class ContactForm {
         const formData = new FormData(this.form);
         const data = Object.fromEntries(formData);
         
-        // Validation
-        if (!data.firstName || !data.lastName || !data.email) {
+        // Validation - updated to match current form fields
+        if (!data.fullName || !data.email) {
             this.showMessage('Please fill in all required fields.', 'error');
             return;
         }
@@ -57,7 +83,7 @@ class ContactForm {
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
         
-        // Integrate with EmailJS or your backend
+        // Integrate with Google Forms
         this.sendEmail(data)
             .then(() => {
                 this.showMessage('Thank you! We will contact you within 24 hours.', 'success');
@@ -73,13 +99,16 @@ class ContactForm {
     }
 
     sendEmail(data) {
-        // Example EmailJS integration
-        // return emailjs.send('service_id', 'template_id', data);
-        
-        // For demo purposes, simulate API call
-        return new Promise((resolve) => {
-            setTimeout(resolve, 2000);
-        });
+        return this.googleFormService.submitForm(data)
+            .then(() => {
+                // Google Forms always returns success due to no-cors
+                console.log('Form submitted to Google Forms');
+                return { status: 'success' };
+            })
+            .catch((error) => {
+                console.error('Google Forms submission error:', error);
+                throw error;
+            });
     }
 
     showMessage(message, type) {

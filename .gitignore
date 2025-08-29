@@ -52,3 +52,6 @@ temp/
 
 # Live server
 .live-server/
+
+# Google Forms Configuration
+src/config.js
