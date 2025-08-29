@@ -230,6 +230,7 @@
   /* Additional hover states */
   .hover\:text-primary:hover { color: #5090DA; }
   .hover\:text-white:hover { color: white; }
+  .hover\:text-secondary:hover { color: #D8A5A3; }
   .hover\:bg-blue-600:hover { background-color: #2563eb; }
   .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
   .hover\:bg-primary:hover { background-color: #5090DA; }
