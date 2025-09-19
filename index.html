@@ -52,7 +52,6 @@
         <div class="container mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="pt-16">
-                    <h5 class="font-medium m-0 text-sm tracking-wider text-gray-500 mb-4">THE CORE BELIEF</h5>
                     <h1 class="m-0 text-4xl lg:text-5xl font-semibold text-gray-800 mb-6 font-sans leading-tight">
                         {{ section_1.headline || 'Default headline...' }}
                     </h1>
@@ -76,7 +75,6 @@
     <section :id="section_2.section_name ? section_2.section_name.replace(/\s+/g, '_') : 'the_problem'" class="special-linear-bg-transparent-to-white pb-16 py-16">
         <div class="container mx-auto px-6">
             <div class="text-center mx-auto max-w-4xl mb-12 bg-secondary text-white px-8 py-6 rounded-full shadow-lg">
-                <h5 class="m-0 font-medium text-sm tracking-wider mb-2">WHAT ARE EARLY ALERTS</h5>
                 <h2 class="m-0 text-2xl lg:text-3xl font-semibold font-sans leading-tight">
                     {{ section_2.headline || 'Default features headline...' }}
                 </h2>
@@ -106,7 +104,6 @@
                     <img :src="getImagePath(section_3.feature_image)" alt="About" class="w-full h-auto rounded-lg shadow-md mb-6">
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h5 class="m-0 font-medium text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5>
                     <h2 class="m-0 text-3xl lg:text-4xl font-semibold text-gray-800 mb-8 font-sans leading-tight">
                         {{ section_3.headline || 'Default about headline...' }}
                     </h2>
