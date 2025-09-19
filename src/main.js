@@ -1,221 +1,124 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+const { createApp } = Vue;
+
+createApp({
+    data() {
+        return {
+            content: null,
+            loading: true,
+            error: null
+        }
+    },
+    
+    computed: {
+        section_1() {
+            return {
+                ...this.content?.section_1 || {},
+                section_name: this.content?.section_1?.section_name || 'hero section'
+            };
+        },
+        section_2() {
+            return {
+                ...this.content?.section_2 || {},
+                section_name: this.content?.section_2?.section_name || 'the problem'
+            };
+        },
+        section_3() {
+            return {
+                ...this.content?.section_3 || {},
+                section_name: this.content?.section_3?.section_name || 'why now'
+            };
+        },
+        headerContent() {
+            return this.content?.main_header || {};
+        }
+    },
+    
+    methods: {
+        async loadContent() {
+            try {
+                this.loading = true;
+                const response = await fetch('./content/content-v1.0.0.json');
+                if (!response.ok) throw new Error('Failed to load content');
+                this.content = await response.json();
+                this.error = null;
+            } catch (error) {
+                console.error('Content loading error:', error);
+                this.error = 'Failed to load content. Please refresh the page.';
+            } finally {
+                this.loading = false;
+            }
+        },
+        
+        getImagePath(imageName) {
+            return imageName ? `./images/${imageName}` : '';
+        },
+        
+        scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        },
+        
+        toggleMobileMenu() {
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        },
+        
+        initializeScrollEffects() {
+            // Navigation scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 100) {
+                    nav.classList.add('backdrop-blur-md', 'bg-white/95');
+                } else {
+                    nav.classList.remove('backdrop-blur-md', 'bg-white/95');
+                }
+            });
+        },
+        
+        initializeAnimations() {
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe sections for fade-in animation
+            document.querySelectorAll('section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.shadow-lg');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('transform', '-translate-y-2');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('transform', '-translate-y-2');
+                });
             });
         }
-    });
-});
-
-import { GOOGLE_FORM_CONFIG } from './config.js';
-
-// Google Forms integration
-class GoogleFormService {
-    constructor() {
-        // Load configuration from separate file
-        this.FORM_URL = GOOGLE_FORM_CONFIG.FORM_URL;
-        this.FIELD_IDS = GOOGLE_FORM_CONFIG.FIELD_IDS;
+    },
+    
+    async mounted() {
+        await this.loadContent();
+        this.initializeScrollEffects();
+        this.initializeAnimations();
     }
-
-    submitForm(data) {
-        const formData = new FormData();
-        formData.append(this.FIELD_IDS.fullName, data.fullName);
-        formData.append(this.FIELD_IDS.email, data.email);
-        formData.append(this.FIELD_IDS.message, data.message || '');
-
-        // Submit to Google Forms
-        return fetch(this.FORM_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Required for Google Forms
-            body: formData
-        });
-    }
-}
-
-// Contact form handling
-class ContactForm {
-    constructor() {
-        this.form = document.getElementById('contactForm');
-        this.googleFormService = new GoogleFormService();
-        this.init();
-    }
-
-    init() {
-        if (this.form) {
-            this.form.addEventListener('submit', this.handleSubmit.bind(this));
-        }
-    }
-
-    validateEmail(email) {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this.form);
-        const data = Object.fromEntries(formData);
-        
-        // Validation - updated to match current form fields
-        if (!data.fullName || !data.email) {
-            this.showMessage('Please fill in all required fields.', 'error');
-            return;
-        }
-        
-        if (!this.validateEmail(data.email)) {
-            this.showMessage('Please enter a valid email address.', 'error');
-            return;
-        }
-        
-        this.submitForm(data);
-    }
-
-    submitForm(data) {
-        const submitButton = this.form.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
-        
-        // Integrate with Google Forms
-        this.sendEmail(data)
-            .then(() => {
-                this.showMessage('Thank you! We will contact you within 24 hours.', 'success');
-                this.form.reset();
-            })
-            .catch(() => {
-                this.showMessage('Something went wrong. Please try again.', 'error');
-            })
-            .finally(() => {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            });
-    }
-
-    sendEmail(data) {
-        return this.googleFormService.submitForm(data)
-            .then(() => {
-                // Google Forms always returns success due to no-cors
-                console.log('Form submitted to Google Forms');
-                return { status: 'success' };
-            })
-            .catch((error) => {
-                console.error('Google Forms submission error:', error);
-                throw error;
-            });
-    }
-
-    showMessage(message, type) {
-        // Remove any existing messages
-        const existingMessages = this.form.querySelectorAll('.form-message');
-        existingMessages.forEach(msg => msg.remove());
-
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `form-message p-4 rounded-lg mb-4 ${type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
-        messageDiv.textContent = message;
-        
-        this.form.insertBefore(messageDiv, this.form.firstChild);
-        
-        setTimeout(() => messageDiv.remove(), 5000);
-    }
-}
-
-// Mobile menu functionality
-class MobileMenu {
-    constructor() {
-        this.menuBtn = document.getElementById('mobileMenuBtn');
-        this.menuOpen = false;
-        this.init();
-    }
-
-    init() {
-        if (this.menuBtn) {
-            this.menuBtn.addEventListener('click', this.toggleMenu.bind(this));
-        }
-    }
-
-    toggleMenu() {
-        // This is a simple implementation - you can enhance it further
-        // For now, it will scroll to the contact section on mobile
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    }
-}
-
-// Initialize components
-document.addEventListener('DOMContentLoaded', () => {
-    new ContactForm();
-    new MobileMenu();
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe sections for fade-in animation
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-});
-
-// Add scroll effect to navigation
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 100) {
-        nav.classList.add('backdrop-blur-md', 'bg-white/95');
-    } else {
-        nav.classList.remove('backdrop-blur-md', 'bg-white/95');
-    }
-});
-
-// Add hover effects to cards
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.shadow-lg');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.classList.add('transform', '-translate-y-2');
-        });
-        card.addEventListener('mouseleave', () => {
-            card.classList.remove('transform', '-translate-y-2');
-        });
-    });
-});
-
-// Form field focus effects
-document.addEventListener('DOMContentLoaded', () => {
-    const formFields = document.querySelectorAll('input, textarea, select');
-    formFields.forEach(field => {
-        field.addEventListener('focus', () => {
-            field.parentElement.classList.add('transform', 'scale-105');
-        });
-        field.addEventListener('blur', () => {
-            field.parentElement.classList.remove('transform', 'scale-105');
-        });
-    });
-});
+}).mount('#app');

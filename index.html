@@ -13,107 +13,110 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
-<body class="bg-gray-50">
-    <!-- Navigation -->
+<body class="bg-gray-50" id="app">
+    <!-- Loading State -->
+    <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div v-if="error" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="text-center">
+            <p class="text-red-600 mb-4">{{ error }}</p>
+            <button @click="loadContent" class="btn-primary">Retry</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div v-if="!loading && !error">
+        <!-- Navigation -->
     <nav class="bg-white shadow-md fixed w-full top-0 z-50">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="text-2xl font-bold text-primary">
-                    <img src="./images/logos/maetri_plain-w-icon.png" alt="Maetri Logo" class="w-43 inline-block">
+                    <img :src="getImagePath('logos/maetri_logo-md-color.png')" alt="Maetri Logo" class="w-43 inline-block">
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#features" class="text-gray-600 hover:text-primary transition">Features</a>
-                    <a href="#about" class="text-gray-600 hover:text-primary transition">About</a>
-                    <a href="#testimonials" class="text-gray-600 hover:text-primary transition">Testimonials</a>
-                    <a href="#contact" class="text-gray-600 hover:text-primary transition">Contact</a>
-                </div>
-                <button id="mobileMenuBtn" class="md:hidden">
-                    <i class="fas fa-bars text-gray-600"></i>
-                </button>
+                <!-- Navigation items removed - keep logo only -->
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-16" style="background-color: #e0e7ff;">
+    <section :id="section_1.section_name ? section_1.section_name.replace(/\s+/g, '_') : 'hero_section'" class="pt-24 pb-16" style="background-color: #e0e7ff;">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="pt-16">
                     <h5 class="font-light m-0 text-sm tracking-wider text-gray-500 mb-4">THE CORE BELIEF</h5>
                     <h1 class="m-0 text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-serif leading-tight">
-                        Maetri is built on one simple belief:
-                        Preventable care failures shouldn't be inevitable.
+                        {{ section_1.headline || 'Default headline...' }}
                     </h1>
                     <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        Every hospitalization, every fall, every crisis has a history—small, scattered moments that went
-                        unseen, unheard,
-                        undocumented.
+                        {{ section_1.subtext || 'Default subtext...' }}
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#contact" class="btn-primary text-center inline-block">
+                        <a @click="scrollToSection('contact')" class="btn-primary text-center inline-block cursor-pointer">
                             Get Started Today
-                        </a>
-                        <a href="#features" class="btn-secondary text-center inline-block">
-                            Learn More
                         </a>
                     </div>
                 </div>
                 <div class="md:block">
-                    <img src="./images/header-1-maetri-elderly-care.png" alt="Healthcare technology" class="w-full h-auto rounded-lg shadow-lg">
+                    <img :src="getImagePath(section_1.feature_image)" alt="Healthcare technology" class="w-full h-auto rounded-lg shadow-lg">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="special-linear-bg-transparent-to-white pb-16 py-16">
+    <section :id="section_2.section_name ? section_2.section_name.replace(/\s+/g, '_') : 'the_problem'" class="special-linear-bg-transparent-to-white pb-16 py-16">
         <div class="container mx-auto px-6">
             <div class="text-center mx-auto max-w-4xl mb-12 bg-secondary text-white px-8 py-6 rounded-full shadow-lg">
                 <h5 class="m-0 font-light text-sm tracking-wider mb-2">WHAT ARE EARLY ALERTS</h5>
-                <h2 class="m-0 text-2xl md:text-3xl font-bold font-serif leading-tight">Early alerts are pattern-based signals of change.
+                <h2 class="m-0 text-2xl md:text-3xl font-bold font-serif leading-tight">
+                    {{ section_2.headline || 'Default features headline...' }}
                 </h2>
             </div>
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="transition-transform hover:scale-105 duration-300">
-                    <img src="./images/elderly-care-maetri-1.png" alt="Elderly Care" class="w-full h-auto rounded-lg shadow-md">
+                    <img :src="getImagePath(section_2.feature_image)" alt="Features" class="w-full h-auto rounded-lg shadow-md">
                 </div>
 
                 <div class="p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <p class="text-gray-600 text-lg leading-relaxed mb-4">Each on its own might mean little. But together, they point to something
-                        forming beneath the surface.</p>
-                    <p class="mt-4 text-gray-800 font-medium">Maetri recognizes these signals—and prompts action while there's still time.</p>
-                    <p class="mt-6 text-gray-700 font-medium">
-                        They are subtle:
-                    </p>
-                    <ul class="list-disc list-inside mt-3 ml-4 text-gray-600 space-y-1">
-                        <li>A pause in speech</li>
-                        <li>A shorter stride</li>
-                        <li>A missed meal</li>
-                        <li>A shift in expression</li>
-                        <li>A second "what?" in a row</li>
-                    </ul>
+                    <div v-if="section_2.subtext">
+                        <p v-for="text in section_2.subtext" :key="text" class="text-lg text-gray-600 mb-4 leading-relaxed">
+                            {{ text }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-gray-50">
+    <section :id="section_3.section_name ? section_3.section_name.replace(/\s+/g, '_') : 'why_now'" class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="order-2 md:order-1">
-                    <img src="./images/in-home-care-maetri.png" alt="In home elderly care" class="w-full h-auto rounded-lg shadow-md mb-6">
-                    <p class="text-lg text-gray-600 leading-relaxed text-center md:text-left">
-                        These are not yet emergencies. But they're the beginning of patterns Maetri is trained to see.
-                    </p>
+                    <img :src="getImagePath(section_3.feature_image)" alt="About" class="w-full h-auto rounded-lg shadow-md mb-6">
                 </div>
                 <div class="order-1 md:order-2">
-                    <h5 class="m-0 font-light text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5>
-                    <h2 class="m-0 text-3xl md:text-4xl font-bold text-gray-800 mb-8 font-serif leading-tight">From subtle change to early warning.</h2>
-                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <!-- <h5 class="m-0 font-light text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5> -->
+                    <h2 class="m-0 text-3xl md:text-4xl font-bold text-gray-800 mb-8 font-serif leading-tight">
+                        {{ section_3.headline || 'Default about headline...' }}
+                    </h2>
+                    <div v-if="section_3.subtext">
+                        <p v-for="text in section_3.subtext" :key="text" class="text-lg text-gray-600 leading-relaxed mb-4">
+                            {{ text }}
+                        </p>
+                    </div>
+                    <!-- Existing table content can remain static or be moved to JSON -->
+                    <!-- <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                         <div class="grid grid-cols-2 gap-4 text-sm">
                             <div class="font-bold text-primary border-b pb-2 mb-2">Subtle Change</div>
                             <div class="font-bold text-primary border-b pb-2 mb-2">Possible Meaning</div>
@@ -130,46 +133,13 @@
                             <div class="text-gray-700">Refusal to engage</div>
                             <div class="text-gray-600">Delirium, psychosocial distress</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Prevention Section -->
-    <section id="prevention" class="bg-white pb-16">
-        <div>
-            <img src="images/assisted-living-maetri.png" alt="assisted-living-maetri" class="w-full h-full object-cover">
-        </div>
-        <div class="container bg-white py-8">
-            <div class="text-center mb-16 max-w-4xl mx-auto">
-                <h5 class="font-light m-0 text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI CAN PREVENT</h5>
-                <h2 class="m-0 font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">When we respond early we can prevent the most common and costly care failures</h2>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-primary mb-4">Medical Emergencies</h3>
-                    <ul class="list-disc list-inside space-y-2 text-gray-700">
-                        <li>Stroke</li>
-                        <li>Congestive heart failure (CHF)</li>
-                        <li>Sepsis</li>
-                        <li>Hip fractures</li>
-                        <li>Delirium</li>
-                    </ul>
-                </div>
-                <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold text-primary mb-4">Care Complications</h3>
-                    <ul class="list-disc list-inside space-y-2 text-gray-700">
-                        <li>Polypharmacy complications</li>
-                        <li>Medication mismanagement</li>
-                        <li>Cognitive regression</li>
-                        <li>Long-term institutionalization</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Contact Form Section -->
     <section id="contact" class="py-16 bg-primary">
