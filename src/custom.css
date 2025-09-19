@@ -9,6 +9,8 @@ html, body {
     width: 100%;
     min-width: 100%;
     overflow-x: hidden;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
 }
 
 #app {
@@ -69,9 +71,41 @@ nav {
     transform: translateY(-2px);
 }
 
+/* Typography */
+h1, h2 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600; /* Semibold */
+}
+
+h3, h4, h5, h6 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500; /* Medium */
+}
+
+p, body, div {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400; /* Regular */
+}
+
 /* Custom font utilities */
 .font-serif {
     font-family: 'Playfair Display', serif;
+}
+
+.font-sans {
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-regular {
+    font-weight: 400;
 }
 
 /* Custom spacing and layout */
