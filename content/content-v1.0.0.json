@@ -1,0 +1,32 @@
+{
+  "main_header": {
+    "logo":"maetri_logo-md-color",
+    "menu_items": ["Contact Us"]
+  },
+  "section_1": {
+    "section_name": "hero section",
+    "headline": "If only they could see the way you care.",
+    "subtext": "CareStory shows what was said, how it felt, and how it made a difference.",
+    "feature_image": "hero-maetri-elderly-care.png"
+  },
+  "section_2": {
+    "section_name": "the problem",    
+    "headline": "Care is more than just numbers.",
+    "subtext":[ 
+      "By the time I finish my shift and sit down to chart, I can barely remember what happened.",
+      "I try to recall our connection, but these systems flatten care into drop-downs, billing codes -- and never really show what we did or why it mattered.",
+      "This is what it means to document care today",
+      "CareStory creates a living record — captured in real time, grounded in signals, and ready to support the people who make care possible"
+    ],
+    "feature_image": "problems-maetri.png"
+  },
+  "section_3": {
+    "section_name":"why now",
+    "headline": "CareStory creates a living record—truth at the point of care",
+    "subtext":[
+      "No matter how many distractions, how exhausted or overextended you are, CareStory creates a reviewable living record of what was seen, heard, and felt.",
+      "So when it comes time to document, you're not relying on memory. You're returning to the moment—with confidence and clarity."
+    ], 
+    "feature_image": "whynow-maetri.jpeg"
+  }
+}

@@ -235,4 +235,79 @@
   .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
   .hover\:bg-primary:hover { background-color: #5090DA; }
   .hover\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+
+  /* Responsive utilities - Small screens and up (640px) */
+  @media (min-width: 640px) {
+    .sm\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .sm\:text-base { font-size: 1rem; line-height: 1.5rem; }
+    .sm\:text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .sm\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .sm\:text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .sm\:h-10 { height: 2.5rem; }
+    .sm\:h-12 { height: 3rem; }
+    .sm\:w-12 { width: 3rem; }
+    .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+    .sm\:py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .sm\:py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .sm\:py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .sm\:py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+    .sm\:py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+    .sm\:pt-24 { padding-top: 6rem; }
+    .sm\:mb-4 { margin-bottom: 1rem; }
+    .sm\:mb-6 { margin-bottom: 1.5rem; }
+    .sm\:mb-8 { margin-bottom: 2rem; }
+    .sm\:mb-12 { margin-bottom: 3rem; }
+    .sm\:gap-4 { gap: 1rem; }
+    .sm\:space-y-6 > * + * { margin-top: 1.5rem; }
+    .sm\:flex-row { flex-direction: row; }
+    .sm\:max-w-lg { max-width: 32rem; }
+    .sm\:h-\[500px\] { height: 500px; }
+  }
+
+  /* Medium screens and up (768px) */
+  @media (min-width: 768px) {
+    .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .md\:h-\[600px\] { height: 600px; }
+    .md\:mb-0 { margin-bottom: 0; }
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md\:flex-row { flex-direction: row; }
+    .md\:text-left { text-align: left; }
+    .md\:justify-start { justify-content: flex-start; }
+  }
+
+  /* Large screens and up (1024px) */
+  @media (min-width: 1024px) {
+    .lg\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .lg\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .lg\:text-5xl { font-size: 3rem; line-height: 1; }
+    .lg\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .lg\:h-12 { height: 3rem; }
+    .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+    .lg\:py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+    .lg\:py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+    .lg\:pt-28 { padding-top: 7rem; }
+    .lg\:pb-20 { padding-bottom: 5rem; }
+    .lg\:mb-16 { margin-bottom: 4rem; }
+    .lg\:gap-8 { gap: 2rem; }
+    .lg\:gap-12 { gap: 3rem; }
+    .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .lg\:order-1 { order: 1; }
+    .lg\:order-2 { order: 2; }
+    .lg\:text-left { text-align: left; }
+    .lg\:justify-start { justify-content: flex-start; }
+    .lg\:mx-0 { margin-left: 0; margin-right: 0; }
+    .lg\:max-w-none { max-width: none; }
+    .lg\:h-\[700px\] { height: 700px; }
+    .lg\:pt-16 { padding-top: 4rem; }
+  }
+
+  /* Extra large screens and up (1280px) */
+  @media (min-width: 1280px) {
+    .xl\:text-6xl { font-size: 3.75rem; line-height: 1; }
+    .xl\:h-\[821px\] { height: 821px; }
+  }
 }
