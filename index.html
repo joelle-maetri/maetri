@@ -50,10 +50,10 @@
     <!-- Hero Section -->
     <section :id="section_1.section_name ? section_1.section_name.replace(/\s+/g, '_') : 'hero_section'" class="pt-24 pb-16" style="background-color: #e0e7ff;">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="pt-16">
                     <h5 class="font-light m-0 text-sm tracking-wider text-gray-500 mb-4">THE CORE BELIEF</h5>
-                    <h1 class="m-0 text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-serif leading-tight">
+                    <h1 class="m-0 text-4xl lg:text-5xl font-bold text-gray-800 mb-6 font-serif leading-tight">
                         {{ section_1.headline || 'Default headline...' }}
                     </h1>
                     <p class="text-lg text-gray-600 mb-8 leading-relaxed">
@@ -65,7 +65,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="md:block">
+                <div class="lg:block">
                     <img :src="getImagePath(section_1.feature_image)" alt="Healthcare technology" class="w-full h-auto rounded-lg shadow-lg">
                 </div>
             </div>
@@ -77,12 +77,12 @@
         <div class="container mx-auto px-6">
             <div class="text-center mx-auto max-w-4xl mb-12 bg-secondary text-white px-8 py-6 rounded-full shadow-lg">
                 <h5 class="m-0 font-light text-sm tracking-wider mb-2">WHAT ARE EARLY ALERTS</h5>
-                <h2 class="m-0 text-2xl md:text-3xl font-bold font-serif leading-tight">
+                <h2 class="m-0 text-2xl lg:text-3xl font-bold font-serif leading-tight">
                     {{ section_2.headline || 'Default features headline...' }}
                 </h2>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="transition-transform hover:scale-105 duration-300">
                     <img :src="getImagePath(section_2.feature_image)" alt="Features" class="w-full h-auto rounded-lg shadow-md">
                 </div>
@@ -101,39 +101,20 @@
     <!-- About Section -->
     <section :id="section_3.section_name ? section_3.section_name.replace(/\s+/g, '_') : 'why_now'" class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
                     <img :src="getImagePath(section_3.feature_image)" alt="About" class="w-full h-auto rounded-lg shadow-md mb-6">
-                </div>
-                <div class="order-1 md:order-2">
-                    <!-- <h5 class="m-0 font-light text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5> -->
-                    <h2 class="m-0 text-3xl md:text-4xl font-bold text-gray-800 mb-8 font-serif leading-tight">
-                        {{ section_3.headline || 'Default about headline...' }}
-                    </h2>
                     <div v-if="section_3.subtext">
                         <p v-for="text in section_3.subtext" :key="text" class="text-lg text-gray-600 leading-relaxed mb-4">
                             {{ text }}
                         </p>
                     </div>
-                    <!-- Existing table content can remain static or be moved to JSON -->
-                    <!-- <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                        <div class="grid grid-cols-2 gap-4 text-sm">
-                            <div class="font-bold text-primary border-b pb-2 mb-2">Subtle Change</div>
-                            <div class="font-bold text-primary border-b pb-2 mb-2">Possible Meaning</div>
-                            <div class="text-gray-700">Speech hesitation</div>
-                            <div class="text-gray-600">Early stroke, cognitive decline</div>
-                            <div class="text-gray-700">Posture slouch</div>
-                            <div class="text-gray-600">Cardiac stress, respiratory fatigue</div>
-                            <div class="text-gray-700">Missed meal</div>
-                            <div class="text-gray-600">Medication side effect, depression</div>
-                            <div class="text-gray-700">Repeated questions</div>
-                            <div class="text-gray-600">Hearing loss, disorientation</div>
-                            <div class="text-gray-700">Wall-touching while walking</div>
-                            <div class="text-gray-600">Balance instability, vertigo</div>
-                            <div class="text-gray-700">Refusal to engage</div>
-                            <div class="text-gray-600">Delirium, psychosocial distress</div>
-                        </div>
-                    </div> -->
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h5 class="m-0 font-light text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5>
+                    <h2 class="m-0 text-3xl lg:text-4xl font-bold text-gray-800 mb-8 font-serif leading-tight">
+                        {{ section_3.headline || 'Default about headline...' }}
+                    </h2>
                 </div>
             </div>
         </div>
@@ -155,36 +136,19 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <div class="lg:col-span-2">
                     <div class="text-2xl font-bold mb-4 text-primary">
-                        <i class="fas fa-heartbeat mr-2"></i>Maetri
+                        <img :src="getImagePath('logos/maetri_logo-md-color.png')" alt="Maetri Logo" class="w-43 inline-block">
                     </div>
                     <p class="text-gray-400 leading-relaxed mb-4">Evidence-based outcomes when care is the real work.</p>
                     <p class="text-sm text-gray-500">Transforming healthcare through early detection and preventive care solutions.</p>
                 </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#features" class="text-secondary">Features</a></li>
-                        <li><a href="#about" class="text-secondary">About</a></li>
-                        <li><a href="#prevention" class="text-secondary">Prevention</a></li>
-                        <li><a href="#contact" class="text-secondary">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 text-white">Contact Info</h4>
-                    <div class="space-y-2 text-gray-400 text-sm">
-                        <p><i class="fas fa-envelope mr-2 text-primary"></i>info@maetri.com</p>
-                        <p><i class="fas fa-phone mr-2 text-primary"></i>Available 24/7</p>
-                        <p><i class="fas fa-shield-alt mr-2 text-primary"></i>HIPAA Compliant</p>
-                    </div>
-                </div>
             </div>
 
-            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm">
+            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col lg:flex-row justify-between items-center text-gray-400 text-sm">
                 <p>&copy; 2025 Maetri. All rights reserved.</p>
-                <div class="mt-4 md:mt-0 space-x-4">
+                <div class="mt-4 lg:mt-0 space-x-4">
                     <a href="#" class="text-secondary">Privacy Policy</a>
                     <a href="#" class="text-secondary">Terms of Service</a>
                 </div>
