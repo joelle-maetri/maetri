@@ -74,18 +74,15 @@
     <!-- Features Section -->
     <section :id="section_2.section_name ? section_2.section_name.replace(/\s+/g, '_') : 'the_problem'" class="special-linear-bg-transparent-to-white pb-16 py-16">
         <div class="container mx-auto px-6">
-            <div class="text-center mx-auto max-w-4xl mb-12 bg-secondary text-white px-8 py-6 rounded-full shadow-lg">
-                <h2 class="m-0 text-2xl lg:text-3xl font-semibold font-sans leading-tight">
-                    {{ section_2.headline || 'Default features headline...' }}
-                </h2>
-            </div>
-
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="transition-transform hover:scale-105 duration-300">
                     <img :src="getImagePath(section_2.feature_image)" alt="Features" class="w-full h-auto rounded-lg shadow-md">
                 </div>
 
                 <div class="p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <h2 class="m-0 text-2xl lg:text-3xl font-semibold font-sans leading-tight">
+                        {{ section_2.headline || 'Default features headline...' }}
+                    </h2>
                     <div v-if="section_2.subtext">
                         <p v-for="text in section_2.subtext" :key="text" class="text-lg text-gray-600 mb-4 leading-relaxed">
                             {{ text }}
