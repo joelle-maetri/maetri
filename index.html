@@ -104,17 +104,17 @@
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="order-2 lg:order-1">
                     <img :src="getImagePath(section_3.feature_image)" alt="About" class="w-full h-auto rounded-lg shadow-md mb-6">
-                    <div v-if="section_3.subtext">
-                        <p v-for="text in section_3.subtext" :key="text" class="text-lg text-gray-600 leading-relaxed mb-4">
-                            {{ text }}
-                        </p>
-                    </div>
                 </div>
                 <div class="order-1 lg:order-2">
                     <h5 class="m-0 font-light text-sm tracking-wider text-gray-500 mb-4">WHAT MAETRI DETECTS</h5>
                     <h2 class="m-0 text-3xl lg:text-4xl font-bold text-gray-800 mb-8 font-serif leading-tight">
                         {{ section_3.headline || 'Default about headline...' }}
                     </h2>
+                    <div v-if="section_3.subtext">
+                        <p v-for="text in section_3.subtext" :key="text" class="text-lg text-gray-600 leading-relaxed mb-4">
+                            {{ text }}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
