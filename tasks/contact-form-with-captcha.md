@@ -38,6 +38,7 @@ Add EmailJS CDN to the HTML head:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+<script type="module" src="./src/config.js"></script>
 ```
 
 ### HTML Structure
@@ -118,6 +119,8 @@ Add EmailJS CDN to the HTML head:
 
 #### Data Properties
 ```javascript
+import { emailjsConfig } from './config.js';
+
 data() {
     return {
         // ... existing data
@@ -130,11 +133,7 @@ data() {
         submitMessage: '',
         submitSuccess: false,
         recaptchaToken: null,
-        emailjsConfig: {
-            serviceId: 'YOUR_EMAILJS_SERVICE_ID',
-            templateId: 'YOUR_EMAILJS_TEMPLATE_ID',
-            publicKey: 'YOUR_EMAILJS_PUBLIC_KEY'
-        }
+        emailjsConfig: emailjsConfig
     }
 },
 ```
@@ -246,12 +245,14 @@ methods: {
 
 ### reCAPTCHA Integration
 
-#### reCAPTCHA Initialization
+#### reCAPTCHA Initialization (Updated)
 ```javascript
+import { recaptchaConfig } from './config.js';
+
 // Global function for reCAPTCHA callback
 window.onRecaptchaLoad = function() {
     window.grecaptcha.render('recaptcha-container', {
-        'sitekey': 'YOUR_RECAPTCHA_SITE_KEY',
+        'sitekey': recaptchaConfig.siteKey,
         'callback': window.app.onRecaptchaVerify,
         'expired-callback': window.app.onRecaptchaExpired
     });
@@ -364,21 +365,67 @@ Required EmailJS IDs:
 
 ## Configuration
 
-### Required Keys & IDs
-Replace these placeholders in the Vue.js configuration:
+### Configuration File Setup
 
+#### Create `src/config.example.js`
 ```javascript
-emailjsConfig: {
+// EmailJS Configuration
+// Copy this file to config.js and replace with your actual values
+
+export const emailjsConfig = {
     serviceId: 'service_xxxxxxx',        // Your EmailJS Service ID
-    templateId: 'template_xxxxxxx',      // Your EmailJS Template ID
-    publicKey: 'xxxxxxxxxxxxxxxxxx'      // Your EmailJS Public Key
-}
+    templateId: 'template_xxxxxxx',      // Your EmailJS Template ID  
+    publicKey: 'xxxxxxxxxxxxxxxxxx'     // Your EmailJS Public Key
+};
+
+export const recaptchaConfig = {
+    siteKey: 'your_recaptcha_site_key_here'  // Your reCAPTCHA Site Key
+};
 ```
 
-### reCAPTCHA Configuration
+#### Create `src/config.js`
 ```javascript
-// In the reCAPTCHA initialization
-'sitekey': 'your_recaptcha_site_key_here'
+// EmailJS Configuration - ACTUAL VALUES
+// This file should not be committed to version control
+
+export const emailjsConfig = {
+    serviceId: 'service_abc123',         // Replace with your actual Service ID
+    templateId: 'template_xyz789',       // Replace with your actual Template ID
+    publicKey: 'your_actual_public_key'  // Replace with your actual Public Key
+};
+
+export const recaptchaConfig = {
+    siteKey: 'your_actual_recaptcha_site_key'  // Replace with your actual reCAPTCHA Site Key
+};
+```
+
+### Updated reCAPTCHA Configuration
+```javascript
+import { recaptchaConfig } from './config.js';
+
+// Global function for reCAPTCHA callback
+window.onRecaptchaLoad = function() {
+    window.grecaptcha.render('recaptcha-container', {
+        'sitekey': recaptchaConfig.siteKey,
+        'callback': window.app.onRecaptchaVerify,
+        'expired-callback': window.app.onRecaptchaExpired
+    });
+};
+```
+
+### File Structure
+```
+src/
+├── config.example.js    # Template file (commit to git)
+├── config.js           # Actual config (add to .gitignore)
+└── main.js            # Vue.js app with config import
+```
+
+### .gitignore Update
+Add to your `.gitignore` file:
+```gitignore
+# Configuration files with sensitive data
+src/config.js
 ```
 
 ### EmailJS Dashboard Configuration
@@ -399,24 +446,32 @@ emailjsConfig: {
    - Register domain with Google reCAPTCHA
    - Get site key for client-side integration
 
-3. **Frontend Implementation**
+3. **Configuration Files**
+   - Copy `src/config.example.js` to `src/config.js`
+   - Replace placeholder values with actual EmailJS and reCAPTCHA keys
+   - Add `src/config.js` to `.gitignore` to prevent committing sensitive keys
+   - Keep `src/config.example.js` in version control as template
+
+4. **Frontend Implementation**
    - Add EmailJS and reCAPTCHA CDN scripts to index.html
+   - Import configuration from `src/config.js` in main.js
    - Replace Google Forms iframe with custom form HTML
    - Implement Vue.js form logic with EmailJS integration
    - Add form validation and error handling
    - Style the form components with existing CSS classes
 
-4. **Configuration**
-   - Add EmailJS service ID, template ID, and public key to Vue.js app
-   - Add reCAPTCHA site key to initialization
+5. **Security Configuration**
    - Configure EmailJS domain restrictions
+   - Ensure `config.js` is in `.gitignore`
+   - Verify reCAPTCHA domain settings
 
-5. **Testing & Deployment**
+6. **Testing & Deployment**
    - Test form submission flow with EmailJS
    - Verify email delivery to intended recipient
    - Test reCAPTCHA functionality
    - Test responsive design on all devices
    - Deploy and verify production functionality
+   - Ensure config files are properly excluded from deployment
 
 ## Success Metrics
 
