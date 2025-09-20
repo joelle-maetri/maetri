@@ -1,12 +1,17 @@
 # Contact Form with Captcha Implementation (EmailJS Integration)
 
 ## Overview
+
 Create a custom contact form to replace the current Google Forms iframe with a clean, branded form that includes captcha protection and integrates with EmailJS for serverless email delivery through the existing Vue.js application.
+
+Email JS: https://www.emailjs.com/pricing/
 
 ## Requirements
 
 ### Form Fields
+
 - **Full Name** (required)
+
   - Input type: text
   - Validation: Required, minimum 2 characters
   - Placeholder: "Your full name"
@@ -17,16 +22,19 @@ Create a custom contact form to replace the current Google Forms iframe with a c
   - Placeholder: "your.email@example.com"
 
 ### Form Elements
+
 - **CTA Button**: "Contact Us"
   - Style: Use existing `.btn-primary` class
   - State: Disabled until form is valid and captcha is completed
 
 ### Captcha Integration
+
 - **Service**: Google reCAPTCHA v2
 - **Implementation**: Client-side validation integrated with EmailJS
 - **Fallback**: Form submission disabled without captcha completion
 
 ### EmailJS Integration
+
 - **Service**: EmailJS for serverless email delivery
 - **Template**: Custom email template with form data
 - **Authentication**: Public key and service ID configuration
@@ -34,90 +42,114 @@ Create a custom contact form to replace the current Google Forms iframe with a c
 ## Technical Implementation
 
 ### Dependencies
+
 Add EmailJS CDN to the HTML head:
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+<script
+  src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit"
+  async
+  defer
+></script>
 <script type="module" src="./src/config.js"></script>
 ```
 
 ### HTML Structure
+
 ```html
 <!-- Contact Form Section -->
 <section id="contact" class="py-16 bg-primary">
-    <div class="container mx-auto px-6">
-        <div class="max-w-2xl mx-auto">
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <h2 class="text-3xl font-semibold font-sans text-gray-800 mb-6 text-center">
-                    Get In Touch
-                </h2>
-                
-                <form @submit.prevent="submitContactForm" class="space-y-6">
-                    <!-- Full Name Field -->
-                    <div>
-                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-2">
-                            Full Name *
-                        </label>
-                        <input 
-                            type="text" 
-                            id="fullName"
-                            v-model="contactForm.fullName"
-                            :class="{'border-red-500': errors.fullName}"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                            placeholder="Your full name"
-                            required
-                        >
-                        <p v-if="errors.fullName" class="text-red-500 text-sm mt-1">{{ errors.fullName }}</p>
-                    </div>
+  <div class="container mx-auto px-6">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-xl shadow-lg p-8">
+        <h2
+          class="text-3xl font-semibold font-sans text-gray-800 mb-6 text-center"
+        >
+          Get In Touch
+        </h2>
 
-                    <!-- Email Field -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address *
-                        </label>
-                        <input 
-                            type="email" 
-                            id="email"
-                            v-model="contactForm.email"
-                            :class="{'border-red-500': errors.email}"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                            placeholder="your.email@example.com"
-                            required
-                        >
-                        <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
-                    </div>
+        <form @submit.prevent="submitContactForm" class="space-y-6">
+          <!-- Full Name Field -->
+          <div>
+            <label
+              for="fullName"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              v-model="contactForm.fullName"
+              :class="{'border-red-500': errors.fullName}"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="Your full name"
+              required
+            />
+            <p v-if="errors.fullName" class="text-red-500 text-sm mt-1">
+              {{ errors.fullName }}
+            </p>
+          </div>
 
-                    <!-- reCAPTCHA -->
-                    <div class="flex justify-center">
-                        <div id="recaptcha-container"></div>
-                    </div>
+          <!-- Email Field -->
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              v-model="contactForm.email"
+              :class="{'border-red-500': errors.email}"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="your.email@example.com"
+              required
+            />
+            <p v-if="errors.email" class="text-red-500 text-sm mt-1">
+              {{ errors.email }}
+            </p>
+          </div>
 
-                    <!-- Submit Button -->
-                    <div class="text-center">
-                        <button 
-                            type="submit" 
-                            :disabled="!isFormValid || isSubmitting"
-                            :class="{'opacity-50 cursor-not-allowed': !isFormValid || isSubmitting}"
-                            class="btn-primary px-8 py-3 text-lg"
-                        >
-                            {{ isSubmitting ? 'Sending...' : 'Contact Us' }}
-                        </button>
-                    </div>
+          <!-- reCAPTCHA -->
+          <div class="flex justify-center">
+            <div id="recaptcha-container"></div>
+          </div>
 
-                    <!-- Success/Error Messages -->
-                    <div v-if="submitMessage" :class="submitSuccess ? 'text-green-600' : 'text-red-600'" class="text-center mt-4">
-                        {{ submitMessage }}
-                    </div>
-                </form>
-            </div>
-        </div>
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button
+              type="submit"
+              :disabled="!isFormValid || isSubmitting"
+              :class="{'opacity-50 cursor-not-allowed': !isFormValid || isSubmitting}"
+              class="btn-primary px-8 py-3 text-lg"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Contact Us' }}
+            </button>
+          </div>
+
+          <!-- Success/Error Messages -->
+          <div
+            v-if="submitMessage"
+            :class="submitSuccess ? 'text-green-600' : 'text-red-600'"
+            class="text-center mt-4"
+          >
+            {{ submitMessage }}
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
 ```
 
 ### Vue.js Implementation
 
 #### Data Properties
+
 ```javascript
 import { emailjsConfig } from './config.js';
 
@@ -139,22 +171,24 @@ data() {
 ```
 
 #### Computed Properties
+
 ```javascript
 computed: {
     // ... existing computed
     isFormValid() {
-        return this.contactForm.fullName.trim().length >= 2 && 
-               this.isValidEmail(this.contactForm.email) && 
+        return this.contactForm.fullName.trim().length >= 2 &&
+               this.isValidEmail(this.contactForm.email) &&
                this.recaptchaToken !== null;
     }
 },
 ```
 
 #### Methods
+
 ```javascript
 methods: {
     // ... existing methods
-    
+
     isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -162,15 +196,15 @@ methods: {
 
     validateForm() {
         this.errors = {};
-        
+
         if (this.contactForm.fullName.trim().length < 2) {
             this.errors.fullName = 'Full name must be at least 2 characters';
         }
-        
+
         if (!this.isValidEmail(this.contactForm.email)) {
             this.errors.email = 'Please enter a valid email address';
         }
-        
+
         return Object.keys(this.errors).length === 0;
     },
 
@@ -246,22 +280,24 @@ methods: {
 ### reCAPTCHA Integration
 
 #### reCAPTCHA Initialization (Updated)
+
 ```javascript
-import { recaptchaConfig } from './config.js';
+import { recaptchaConfig } from "./config.js";
 
 // Global function for reCAPTCHA callback
-window.onRecaptchaLoad = function() {
-    window.grecaptcha.render('recaptcha-container', {
-        'sitekey': recaptchaConfig.siteKey,
-        'callback': window.app.onRecaptchaVerify,
-        'expired-callback': window.app.onRecaptchaExpired
-    });
+window.onRecaptchaLoad = function () {
+  window.grecaptcha.render("recaptcha-container", {
+    sitekey: recaptchaConfig.siteKey,
+    callback: window.app.onRecaptchaVerify,
+    "expired-callback": window.app.onRecaptchaExpired,
+  });
 };
 ```
 
 ### EmailJS Setup
 
 #### Vue.js App Lifecycle
+
 ```javascript
 mounted() {
     // Initialize EmailJS when the app mounts
@@ -274,39 +310,35 @@ mounted() {
 ## EmailJS Configuration
 
 ### EmailJS Account Setup
+
 1. **Create EmailJS Account**: Sign up at [emailjs.com](https://www.emailjs.com/)
-2. **Add Email Service**: 
+2. **Add Email Service**:
    - Gmail, Outlook, or custom SMTP
    - Configure authentication
 3. **Create Email Template**
 4. **Get Service Credentials**
 
 ### Email Template Setup
+
 Create a template in EmailJS dashboard with these variables:
+
 ```html
-Subject: New Contact Form Submission - {{from_name}}
-
-Hello,
-
-You have received a new contact form submission:
-
-Name: {{from_name}}
-Email: {{from_email}}
-Submitted: {{submission_date}}
-
-Message: {{message}}
-
-Best regards,
-Maetri Contact Form
+Subject: New Contact Form Submission - {{from_name}} Hello, You have received a
+new contact form submission: Name: {{from_name}} Email: {{from_email}}
+Submitted: {{submission_date}} Message: {{message}} Best regards, Maetri Contact
+Form
 ```
 
 ### Service Configuration
+
 Required EmailJS IDs:
+
 - **Service ID**: Your email service identifier
-- **Template ID**: Your email template identifier  
+- **Template ID**: Your email template identifier
 - **Public Key**: Your EmailJS public key
 
 ### Security Features
+
 1. **Domain Restrictions**: Configure allowed domains in EmailJS
 2. **Rate Limiting**: Built-in EmailJS rate limiting
 3. **Template Variables**: Sanitized automatically by EmailJS
@@ -315,28 +347,30 @@ Required EmailJS IDs:
 ## Styling Considerations
 
 ### CSS Additions
+
 ```css
 /* Form styling enhancements */
 .form-input:focus {
-    outline: none;
-    border-color: #5090DA;
-    box-shadow: 0 0 0 3px rgba(80, 144, 218, 0.1);
+  outline: none;
+  border-color: #5090da;
+  box-shadow: 0 0 0 3px rgba(80, 144, 218, 0.1);
 }
 
 .form-error {
-    border-color: #ef4444;
+  border-color: #ef4444;
 }
 
 /* reCAPTCHA responsive styling */
 @media (max-width: 768px) {
-    .g-recaptcha {
-        transform: scale(0.85);
-        transform-origin: 0 0;
-    }
+  .g-recaptcha {
+    transform: scale(0.85);
+    transform-origin: 0 0;
+  }
 }
 ```
 
 ### Responsive Design
+
 - Form container: `max-w-2xl` on desktop, full width on mobile
 - Input fields: Full width with proper padding
 - reCAPTCHA: Centered and responsive scaling
@@ -368,52 +402,56 @@ Required EmailJS IDs:
 ### Configuration File Setup
 
 #### Create `src/config.example.js`
+
 ```javascript
 // EmailJS Configuration
 // Copy this file to config.js and replace with your actual values
 
 export const emailjsConfig = {
-    serviceId: 'service_xxxxxxx',        // Your EmailJS Service ID
-    templateId: 'template_xxxxxxx',      // Your EmailJS Template ID  
-    publicKey: 'xxxxxxxxxxxxxxxxxx'     // Your EmailJS Public Key
+  serviceId: "service_xxxxxxx", // Your EmailJS Service ID
+  templateId: "template_xxxxxxx", // Your EmailJS Template ID
+  publicKey: "xxxxxxxxxxxxxxxxxx", // Your EmailJS Public Key
 };
 
 export const recaptchaConfig = {
-    siteKey: 'your_recaptcha_site_key_here'  // Your reCAPTCHA Site Key
+  siteKey: "your_recaptcha_site_key_here", // Your reCAPTCHA Site Key
 };
 ```
 
 #### Create `src/config.js`
+
 ```javascript
 // EmailJS Configuration - ACTUAL VALUES
 // This file should not be committed to version control
 
 export const emailjsConfig = {
-    serviceId: 'service_abc123',         // Replace with your actual Service ID
-    templateId: 'template_xyz789',       // Replace with your actual Template ID
-    publicKey: 'your_actual_public_key'  // Replace with your actual Public Key
+  serviceId: "service_abc123", // Replace with your actual Service ID
+  templateId: "template_xyz789", // Replace with your actual Template ID
+  publicKey: "your_actual_public_key", // Replace with your actual Public Key
 };
 
 export const recaptchaConfig = {
-    siteKey: 'your_actual_recaptcha_site_key'  // Replace with your actual reCAPTCHA Site Key
+  siteKey: "your_actual_recaptcha_site_key", // Replace with your actual reCAPTCHA Site Key
 };
 ```
 
 ### Updated reCAPTCHA Configuration
+
 ```javascript
-import { recaptchaConfig } from './config.js';
+import { recaptchaConfig } from "./config.js";
 
 // Global function for reCAPTCHA callback
-window.onRecaptchaLoad = function() {
-    window.grecaptcha.render('recaptcha-container', {
-        'sitekey': recaptchaConfig.siteKey,
-        'callback': window.app.onRecaptchaVerify,
-        'expired-callback': window.app.onRecaptchaExpired
-    });
+window.onRecaptchaLoad = function () {
+  window.grecaptcha.render("recaptcha-container", {
+    sitekey: recaptchaConfig.siteKey,
+    callback: window.app.onRecaptchaVerify,
+    "expired-callback": window.app.onRecaptchaExpired,
+  });
 };
 ```
 
 ### File Structure
+
 ```
 src/
 ├── config.example.js    # Template file (commit to git)
@@ -422,13 +460,16 @@ src/
 ```
 
 ### .gitignore Update
+
 Add to your `.gitignore` file:
+
 ```gitignore
 # Configuration files with sensitive data
 src/config.js
 ```
 
 ### EmailJS Dashboard Configuration
+
 1. **Service Setup**: Add Gmail/Outlook service
 2. **Template Variables**: Configure with: `from_name`, `from_email`, `message`, `g-recaptcha-response`
 3. **Domain Restrictions**: Add your domain to allowed origins
@@ -437,22 +478,26 @@ src/config.js
 ## Implementation Steps
 
 1. **Setup EmailJS**
+
    - Create EmailJS account at [emailjs.com](https://www.emailjs.com/)
    - Add email service (Gmail/Outlook)
    - Create email template with required variables
    - Configure domain restrictions
 
 2. **Setup reCAPTCHA**
+
    - Register domain with Google reCAPTCHA
    - Get site key for client-side integration
 
 3. **Configuration Files**
+
    - Copy `src/config.example.js` to `src/config.js`
    - Replace placeholder values with actual EmailJS and reCAPTCHA keys
    - Add `src/config.js` to `.gitignore` to prevent committing sensitive keys
    - Keep `src/config.example.js` in version control as template
 
 4. **Frontend Implementation**
+
    - Add EmailJS and reCAPTCHA CDN scripts to index.html
    - Import configuration from `src/config.js` in main.js
    - Replace Google Forms iframe with custom form HTML
@@ -461,6 +506,7 @@ src/config.js
    - Style the form components with existing CSS classes
 
 5. **Security Configuration**
+
    - Configure EmailJS domain restrictions
    - Ensure `config.js` is in `.gitignore`
    - Verify reCAPTCHA domain settings
@@ -485,6 +531,7 @@ src/config.js
 ## Benefits of EmailJS Integration
 
 ### Advantages
+
 - **No Backend Required**: Serverless email delivery
 - **Easy Setup**: No server configuration needed
 - **Built-in Security**: Domain restrictions and rate limiting
@@ -493,13 +540,16 @@ src/config.js
 - **Quick Implementation**: Ready to deploy immediately
 
 ### Limitations
+
 - **Client-side Only**: No server-side reCAPTCHA verification
 - **Rate Limits**: Monthly email quotas based on plan
 - **Dependency**: Relies on EmailJS service availability
 - **Template Management**: Changes require EmailJS dashboard access
 
 ## Alternative Considerations
+
 If server-side reCAPTCHA verification is required, consider:
+
 1. **Netlify Forms** with Functions
 2. **Vercel API Routes** with EmailJS
 3. **Custom serverless functions** (AWS Lambda, etc.)
