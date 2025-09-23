@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "build-prod": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "serve": "live-server --port=3000",
+    "serve": "live-server --port=3800",
     "dev": "npm run build & npm run serve",
     "deploy": "npm run build-prod && cp dist/output.css styles.css && gh-pages -d .",
     "test": "echo \"Error: no test specified\" && exit 1"
